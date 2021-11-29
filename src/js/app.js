@@ -1,17 +1,9 @@
 import React, {Fragment} from 'react'
-
+import Home from "./components/views/Home";
 const App = () => {
-  const sendNotification = () => {
-    e_notification.sendNotification('My custom message')
-  }
-
-  return (
-    <Fragment>
-      <h1>Hello World</h1>
-      <button onClick={sendNotification}>Send Notification</button>
-    </Fragment>
-
-  )
+ return (
+   <Home/>
+ )
 }
 
 export default App
