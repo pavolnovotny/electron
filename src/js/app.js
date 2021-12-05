@@ -18,7 +18,7 @@ const App = () => {
      <Navbar/>
      <div className='content-wrapper'>
       <Switch>
-        <Route path="/chat">
+        <Route path="/chat/:id">
           <ChatView/>
         </Route>
         <Route path="/settings">
