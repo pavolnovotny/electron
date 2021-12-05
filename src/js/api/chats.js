@@ -1,14 +1,9 @@
-import db from '../db/firestrore'
+import db from '../db/firestrore';
 
-export const fetchChats = () => {
-  return db
+export const fetchChats = () =>
+  db
     .collection('chats')
     .get()
-    .then((snapshot) => {
-      const data = snapshot.docs.map(doc => {
-        return doc.data()
-      })
-
-      return data
-    })
-}
+    .then(snapshot =>
+      snapshot.docs.map(doc => ({id: doc.id, ...doc.data()}))
+    )
