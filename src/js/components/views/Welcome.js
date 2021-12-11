@@ -3,20 +3,15 @@ import {useSelector} from "react-redux";
 import LoginForm from "../LoginForm";
 import RegisterForm from "../RegisterForm";
 import {Redirect} from 'react-router-dom'
-import LoadingView from "../shared/LoadingView";
 
 export default function Welcome() {
   const [isLoginView, setIsLoginView] = useState(true)
   const user = useSelector(({auth}) => auth.user)
-  const isChecking = useSelector(({auth}) => auth.isChecking)
 
   const optInText = isLoginView ?
     ['Need an account ?', 'Register'] :
     ['Already registered ?', 'Login']
 
-  if (isChecking) {
-    return <LoadingView/>
-  }
 
   if (user) {
     return <Redirect to="/home" />
