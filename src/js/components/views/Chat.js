@@ -4,10 +4,10 @@ import {useParams} from 'react-router-dom'
 import ChatUserList from '../ChatMessagesList';
 import ChatMessagesList from '../ChatMessagesList';
 import ViewTitle from '../shared/ViewTitle';
+import {withBaseLayout} from "../../layouts/Base";
 
-export default function Chat() {
+function Chat() {
   const {id} = useParams()
-
   return (
     <div className="row no-gutters fh">
       <div className="col-3 fh">
@@ -20,3 +20,5 @@ export default function Chat() {
     </div>
   )
 }
+
+export default withBaseLayout(Chat, {canGoBack: true})

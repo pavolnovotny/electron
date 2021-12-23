@@ -12,7 +12,6 @@ export default function Welcome() {
     ['Need an account ?', 'Register'] :
     ['Already registered ?', 'Login']
 
-
   if (user) {
     return <Redirect to="/home" />
   }

@@ -1,58 +1,48 @@
 import React from 'react';
 
-export default function Register() {
+import {withBaseLayout} from "../../layouts/Base";
+
+function Settings() {
   return (
     <div className="centered-view">
       <div className="centered-container">
-        <form onSubmit={() => {}} className="centered-container-form">
-          <div className="header">Create an account</div>
+        <form className="centered-container-form">
+          <div className="header">Adjust application settings</div>
           <div className="form-container">
-            <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                className="form-control"
-                name="email"
-                id="email"
-                aria-describedby="emailHelp" />
-              <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
+            <div className="my-3">
+              <div className="form-check">
+                <input
+                  name="isDarkTheme"
+                  type="checkbox"
+                  className="form-check-input" />
+                <label className="form-check-label">Dark Theme</label>
+              </div>
+              <div className="form-check">
+                <input
+                  name="showNotifications"
+                  type="checkbox"
+                  className="form-check-input" />
+                <label className="form-check-label">Enable Notification</label>
+              </div>
+              <div className="form-check">
+                <input
+                  name="playSound"
+                  type="checkbox"
+                  className="form-check-input" />
+                <label className="form-check-label">Sound notification</label>
+              </div>
             </div>
-            <div className="form-group">
-              <label htmlFor="username">Username</label>
-              <input
-                type="text"
-                name="username"
-                className="form-control"
-                id="username"
-                aria-describedby="emailHelp" />
-            </div>
-            <div className="form-group">
-              <label htmlFor="avatar">Avatar</label>
-              <input
-                type="text"
-                name="avatar"
-                className="form-control"
-                id="avatar"
-                aria-describedby="emailHelp" />
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <input
-                name="password"
-                type="password"
-                className="form-control"
-                id="password" />
-            </div>
-            { false && <div className="alert alert-danger small">Some Error</div>}
-            <button type="submit" className="btn btn-outline-primary">Register</button>
+            <button
+              type="button"
+              onClick={() => {}}
+              className="btn btn-danger">
+              Quit App
+            </button>
           </div>
         </form>
-        <small className="form-text text-muted mt-2">Not registered yet?
-          <span
-            onClick={() => {}}
-            className="btn-link ml-2">Register</span>
-        </small>
       </div>
     </div>
   )
 }
+
+export default withBaseLayout(Settings, {canGoBack: true})

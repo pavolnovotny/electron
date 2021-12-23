@@ -3,17 +3,31 @@ import {useDispatch, useSelector} from "react-redux";
 
 import Home from "./components/views/Home";
 import {
- HashRouter as Router,
- Switch,
- Route
+  HashRouter as Router,
+  Switch,
+  Route,
+  Redirect
 } from 'react-router-dom'
-import Navbar from "./components/Navbar";
-import Settings from "./components/views/Register";
+import Settings from "./components/views/Settings";
 import Welcome from "./components/views/Welcome";
 import ChatView from "./components/views/Chat"
 import {listenToAuthChanges} from './actions/auth'
 import StoreProvider from "./store/StoreProvider";
 import LoadingView from "./components/shared/LoadingView";
+
+function AuthRoute ({children, ...rest}) {
+  const user = useSelector(({auth}) => auth.user)
+  const onlyChild = React.Children.only(children)
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        user ?
+          React.cloneElement(onlyChild, {...rest, ...props}) :
+          <Redirect to="/"/>
+      }/>
+  )
+}
 
 const ContentWrapper = ({children}) => <div className='content-wrapper'>{children}</div>
 
@@ -30,21 +44,20 @@ const ChatApp = () => {
 
  return (
    <Router>
-     <Navbar />
      <ContentWrapper>
        <Switch>
          <Route path="/" exact>
            <Welcome />
          </Route>
-         <Route path="/home">
+         <AuthRoute path="/home">
            <Home />
-         </Route>
-         <Route path="/chat/:id">
+         </AuthRoute>
+         <AuthRoute path="/chat/:id">
            <ChatView />
-         </Route>
-         <Route path="/settings">
+         </AuthRoute>
+         <AuthRoute path="/settings">
            <Settings />
-         </Route>
+         </AuthRoute>
        </Switch>
      </ContentWrapper>
    </Router>

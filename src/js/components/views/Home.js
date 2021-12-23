@@ -7,6 +7,7 @@ import ViewTitle from "../shared/ViewTitle";
 import {useDispatch, useSelector} from 'react-redux'
 
 import { fetchChats } from "../../actions/chats";
+import {withBaseLayout} from "../../layouts/Base";
 
 
 const Home = () => {
@@ -23,13 +24,13 @@ const Home = () => {
         <JoinedChatsList chats={chats}/>
       </div>
       <div className="col-9 fh">
-          <ViewTitle text="Choose your channel"/>
+        <ViewTitle text="Choose your channel"/>
         <div className="container-fluid">
-            <AvailableChatsList chats={chats}/>
+          <AvailableChatsList chats={chats}/>
         </div>
       </div>
     </div>
   )
 }
 
-export default Home
+export default withBaseLayout(Home)
