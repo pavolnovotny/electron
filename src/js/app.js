@@ -14,6 +14,7 @@ import ChatView from "./components/views/Chat"
 import {listenToAuthChanges} from './actions/auth'
 import StoreProvider from "./store/StoreProvider";
 import LoadingView from "./components/shared/LoadingView";
+import {listenToConnectionChanges} from "./actions/app";
 
 function AuthRoute ({children, ...rest}) {
   const user = useSelector(({auth}) => auth.user)
@@ -34,12 +35,24 @@ const ContentWrapper = ({children}) => <div className='content-wrapper'>{childre
 const ChatApp = () => {
   const dispatch = useDispatch()
   const isChecking = useSelector(({auth}) => auth.isChecking)
+  const isOnline = useSelector(({app}) => app.isOnline)
+
   useEffect(() => {
-    dispatch(listenToAuthChanges())
+    const unsubFromAuth = dispatch(listenToAuthChanges())
+    const unsubFromConnection = dispatch(listenToConnectionChanges())
+
+    return () => {
+      unsubFromAuth()
+      unsubFromConnection()
+    }
   },[dispatch])
 
   if (isChecking) {
     return <LoadingView/>
+  }
+
+  if (!isOnline) {
+    return <LoadingView message="Application has been disconnected. Please reconnect."/>
   }
 
  return (
