@@ -11,6 +11,7 @@ import {
 import Settings from "./components/views/Settings";
 import Welcome from "./components/views/Welcome";
 import ChatView from "./components/views/Chat"
+import ChatCreate from "./components/views/ChatCreate";
 import {listenToAuthChanges} from './actions/auth'
 import StoreProvider from "./store/StoreProvider";
 import LoadingView from "./components/shared/LoadingView";
@@ -64,6 +65,9 @@ const ChatApp = () => {
          </Route>
          <AuthRoute path="/home">
            <Home />
+         </AuthRoute>
+         <AuthRoute path="/chatCreate">
+           <ChatCreate />
          </AuthRoute>
          <AuthRoute path="/chat/:id">
            <ChatView />

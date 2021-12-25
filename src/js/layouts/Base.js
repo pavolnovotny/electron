@@ -1,6 +1,5 @@
 import React, {Fragment} from "react";
 import Navbar from "../components/Navbar";
-import {get} from "react-hook-form";
 
 export default function BaseLayout({children, ...props}) {
   return (

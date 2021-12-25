@@ -1,4 +1,5 @@
 import React, {useEffect} from "react";
+import { Link } from "react-router-dom";
 
 import JoinedChatsList from "../JoinedChatsList";
 import AvailableChatsList from "../AvailableChatsList";
@@ -26,7 +27,13 @@ const Home = () => {
         <JoinedChatsList chats={chats}/>
       </div>
       <div className="col-9 fh">
-        <ViewTitle text="Choose your channel"/>
+        <ViewTitle text="Choose your channel">
+         <Link
+           className="btn btn-outline-primary"
+           to="/chatCreate">
+           New
+         </Link>
+        </ViewTitle>
         <div className="container-fluid">
           <AvailableChatsList chats={chats}/>
         </div>
