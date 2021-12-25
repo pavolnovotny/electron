@@ -1,11 +1,20 @@
 import React from "react";
 import {useForm} from "react-hook-form";
+import {useDispatch, useSelector} from "react-redux";
+import {useHistory} from 'react-router-dom'
+
 import {withBaseLayout} from "../../layouts/Base";
+import {createChat} from "../../actions/chats";
 
 function ChatCreate() {
+  const history = useHistory()
   const {register, handleSubmit} = useForm()
+  const dispatch = useDispatch()
+  const user = useSelector(({auth}) => auth.user)
+
   const onSubmit = data => {
-    alert(JSON.stringify(data))
+    dispatch(createChat(data, user.uid))
+      .then(_ => history.push('/'))
   }
 
   return (
@@ -16,7 +25,7 @@ function ChatCreate() {
           <div className="subheader">Chat with people you know!</div>
           <div className="form-container">
             <div className="form-group">
-              <label htmlFor="email">Email</label>
+              <label htmlFor="email">Name</label>
               <input
                 ref={register}
                 type="text"
@@ -44,7 +53,7 @@ function ChatCreate() {
                 name="image"
               />
             </div>
-            <button type="submit" className="btn btn-outline-primary">Login</button>
+            <button type="submit" className="btn btn-outline-primary">Create</button>
           </div>
         </form>
       </div>

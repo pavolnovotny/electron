@@ -14,7 +14,8 @@ import Notification from '../../utils/notifications'
 
 const Home = () => {
   const dispatch = useDispatch()
-  const chats = useSelector(({chats}) => chats.items)
+  const joined = useSelector(({chats}) => chats.joined)
+  const available = useSelector(({chats}) => chats.available)
 
   useEffect(() => {
     Notification.setup()
@@ -24,7 +25,7 @@ const Home = () => {
   return (
     <div className="row no-gutters fh">
       <div className="col-3 fh">
-        <JoinedChatsList chats={chats}/>
+        <JoinedChatsList chats={joined}/>
       </div>
       <div className="col-9 fh">
         <ViewTitle text="Choose your channel">
@@ -35,7 +36,7 @@ const Home = () => {
          </Link>
         </ViewTitle>
         <div className="container-fluid">
-          <AvailableChatsList chats={chats}/>
+          <AvailableChatsList chats={available}/>
         </div>
       </div>
     </div>

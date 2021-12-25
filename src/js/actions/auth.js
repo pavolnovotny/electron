@@ -35,6 +35,7 @@ export const loginUser = formData => dispatch => {
 export const logout = () => dispatch => {
   api.logout()
     .then(_ => {
+      dispatch({type: 'CHATS_FETCH_RESTART'})
       dispatch({type: 'AUTH_LOGOUT_SUCCESS'})
     })
 }
