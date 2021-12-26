@@ -16,6 +16,7 @@ import {listenToAuthChanges} from './actions/auth'
 import StoreProvider from "./store/StoreProvider";
 import LoadingView from "./components/shared/LoadingView";
 import {listenToConnectionChanges} from "./actions/app";
+import {checkUserConnection} from "./actions/connection";
 
 function AuthRoute ({children, ...rest}) {
   const user = useSelector(({auth}) => auth.user)
@@ -37,16 +38,31 @@ const ChatApp = () => {
   const dispatch = useDispatch()
   const isChecking = useSelector(({auth}) => auth.isChecking)
   const isOnline = useSelector(({app}) => app.isOnline)
+  const user = useSelector(({auth}) => auth.user)
 
   useEffect(() => {
     const unsubFromAuth = dispatch(listenToAuthChanges())
     const unsubFromConnection = dispatch(listenToConnectionChanges())
 
+
     return () => {
       unsubFromAuth()
       unsubFromConnection()
+      unsubFromUserConnection()
     }
   },[dispatch])
+
+  useEffect(() => {
+    let unsubFromUserConnection
+    if (user?.uid) {
+      unsubFromUserConnection = dispatch(checkUserConnection(user.uid))
+    }
+
+    return () => {
+      unsubFromUserConnection && unsubFromUserConnection()
+    }
+
+  }, [dispatch, user])
 
   if (isChecking) {
     return <LoadingView/>

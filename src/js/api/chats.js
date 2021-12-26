@@ -32,3 +32,12 @@ export const subscribeToChat = (chatId, onSubscribe) => {
           onSubscribe(chat)
       })
 }
+
+export const subscribeToProfile = (uid, onSubscribe) => {
+  return db
+    .collection('profiles')
+    .doc(uid)
+    .onSnapshot(snapshot => {
+      onSubscribe(snapshot.data())
+    })
+}
