@@ -6,18 +6,33 @@ import ChatUserList from '../ChatUsersList';
 import ChatMessagesList from '../ChatMessagesList';
 import ViewTitle from '../shared/ViewTitle';
 import {withBaseLayout} from "../../layouts/Base";
-import {subscribeToChat, subscribeToProfile} from "../../actions/chats";
+import {
+  subscribeToChat,
+  subscribeToProfile,
+  sendChatMessage,
+  subscribeToMessages,
+  registerMessageSubscription
+} from "../../actions/chats";
 import LoadingView from "../shared/LoadingView";
+import Messenger from "../Messenger";
 
 function Chat() {
   const dispatch = useDispatch()
   const {id} = useParams()
   const peopleWatchers = useRef({})
   const activeChat = useSelector(({chats}) => chats.activeChats[id])
+  const messages = useSelector(({chats}) => chats.messages[id])
+  const messagesSub = useSelector(({chats}) => chats.messagesSubs[id])
   const joinedUser = activeChat?.joinedUsers
 
   useEffect(()=> {
     const unsubFromChat = dispatch(subscribeToChat(id))
+
+    if (!messagesSub)  {
+      const unsubFromMessages = dispatch(subscribeToMessages(id));
+      dispatch(registerMessageSubscription(id, unsubFromMessages));
+    }
+
     return () => {
       unsubFromChat()
       unsubFromJoinedUsers()
@@ -45,6 +60,10 @@ function Chat() {
     return <LoadingView message="Loading ..." />
   }
 
+  const sendMessage = message => {
+    dispatch(sendChatMessage(message,id))
+  }
+
   return (
     <div className="row no-gutters fh">
       <div className="col-3 fh">
@@ -52,7 +71,8 @@ function Chat() {
       </div>
       <div className="col-9 fh">
         { activeChat?.name && <ViewTitle text={`Joined channel: ${activeChat?.name}`} />}
-        <ChatMessagesList />
+        <ChatMessagesList messages={messages} />
+        <Messenger onSubmit={sendMessage}/>
       </div>
     </div>
   )

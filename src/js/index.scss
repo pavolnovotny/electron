@@ -371,6 +371,10 @@ ul {
   padding: 0;
 }
 
+textarea {
+  resize: none;
+}
+
 .chat-name-container {
   display: flex;
   flex-direction: row;
