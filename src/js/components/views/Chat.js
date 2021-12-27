@@ -20,6 +20,7 @@ function Chat() {
   const dispatch = useDispatch()
   const {id} = useParams()
   const peopleWatchers = useRef({})
+  const messageList = useRef()
   const activeChat = useSelector(({chats}) => chats.activeChats[id])
   const messages = useSelector(({chats}) => chats.messages[id])
   const messagesSub = useSelector(({chats}) => chats.messagesSubs[id])
@@ -62,6 +63,7 @@ function Chat() {
 
   const sendMessage = message => {
     dispatch(sendChatMessage(message,id))
+      .then(_ => messageList.current.scrollIntoView(false))
   }
 
   return (
@@ -71,7 +73,9 @@ function Chat() {
       </div>
       <div className="col-9 fh">
         { activeChat?.name && <ViewTitle text={`Joined channel: ${activeChat?.name}`} />}
-        <ChatMessagesList messages={messages} />
+        <ChatMessagesList
+          messages={messages}
+          innerRef={messageList} />
         <Messenger onSubmit={sendMessage}/>
       </div>
     </div>
