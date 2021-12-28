@@ -3,7 +3,8 @@ import Storage from "../utils/storage";
 const INITIAL_STATE = {
   isDarkTheme: false,
   playSound: true,
-  showNotification: true
+  showNotification: true,
+  saveAble: true
 }
 
 export default function settingsReducer(state = INITIAL_STATE,action) {
