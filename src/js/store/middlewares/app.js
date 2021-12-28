@@ -1,4 +1,5 @@
 import Notification from '../../utils/notifications'
+import Storage from "../../utils/storage";
 
 export default (store) => (next) => (action) => {
 
@@ -6,6 +7,13 @@ export default (store) => (next) => (action) => {
     case 'APP_IS_ONLINE':
     case 'APP_IS_OFFLINE': {
       Notification.show({title: 'Connection status:', body: action.isOnline ? 'Online' : 'Offline'})
+    }
+    case 'SETTINGS_UPDATE': {
+      const {setting,value} = action
+      const currentSettings = Storage.getItem('app-settings')
+      const settings = {...currentSettings, [setting] : value}
+
+      Storage.setItem('app-settings', settings)
     }
     case 'AUTH_LOGOUT_SUCCESS': {
       const {messagesSubs} = store.getState()
