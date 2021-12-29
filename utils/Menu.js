@@ -8,13 +8,43 @@ exports.createTemplate = app => {
           app.quit();
         }
       }]
-    }, {
+    },{
       label: 'Edit',
-      submenu: [{
-        label: 'Undo',
-        accelerator: 'CmdOrCtrl+Z',
-        role: 'undo'
-      }]
+      submenu: [
+        {
+          label: "Undo",
+          accelerator: "CmdOrCtrl+Z",
+          selector: "undo:"
+        },
+        {
+          label: "Redo",
+          accelerator: "Shift+CmdOrCtrl+Z",
+          selector: "redo:"
+        },
+        {
+          type: "separator"
+        },
+        {
+          label: "Cut",
+          accelerator: "CmdOrCtrl+X",
+          selector: "cut:"
+        },
+        {
+          label: "Copy",
+          accelerator: "CmdOrCtrl+C",
+          selector: "copy:"
+        },
+        {
+          label: "Paste",
+          accelerator: "CmdOrCtrl+V",
+          selector: "paste:"
+        },
+        {
+          label: "Select All",
+          accelerator: "CmdOrCtrl+A",
+          selector: "selectAll:"
+        }
+      ]
     }, {
       label: 'View',
       submenu: [{
@@ -25,11 +55,9 @@ exports.createTemplate = app => {
             // on reload, start fresh and close any old
             // open secondary windows
             if (focusedWindow.id === 1) {
-              // console.log('in FOCUS!');
-              const {BrowserWindow} = require('electron');
+              const { BrowserWindow } = require('electron');
               BrowserWindow.getAllWindows().forEach(win => {
                 if (win.id > 1) {
-                  // console.log('Closing!');
                   win.close();
                 }
               })
@@ -77,7 +105,7 @@ exports.createTemplate = app => {
               buttons: ['Ok', 'Cancel'],
               message: 'This demo is for the Menu section, showing how to create a clickable menu item in the application menu.'
             }
-            const {dialog} = require('electron')
+            const { dialog } = require('electron');
             dialog.showMessageBox(focusedWindow, options)
           }
         }
@@ -88,7 +116,6 @@ exports.createTemplate = app => {
       submenu: [{
         label: 'Minimize',
         accelerator: 'CmdOrCtrl+M',
-        // nooooop
         role: 'minimize'
       }, {
         label: 'Close',
@@ -112,7 +139,7 @@ exports.createTemplate = app => {
         click: () => {
           // The shell module provides functions related to desktop integration.
           // An example of opening a URL in the user's default browser:
-          const {shell} = require('electron');
+          const { shell } = require('electron');
           shell.openExternal('http://electron.atom.io')
         }
       }]
