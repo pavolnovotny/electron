@@ -1,12 +1,14 @@
-const { app, BrowserWindow, ipcMain, Notification } = require('electron')
+const { app, BrowserWindow, ipcMain, Notification, Menu } = require('electron')
 const path = require('path')
 const isDev = !app.isPackaged
+
+const dockIcon = path.join(__dirname, 'assets', 'images', 'react_app_logo.png')
 
 const createWindow = () => {
   const win = new BrowserWindow({
     width: 1200,
     height: 800,
-    backgroundColor: 'white',
+    backgroundColor: '#6e707e',
     webPreferences: {
       nodeIntegration: false,
       worldSafeExecuteJavaScript: true,
@@ -25,7 +27,16 @@ if (isDev) {
   })
 }
 
-app.whenReady().then(createWindow)
+if (process.platform === 'darwin') {
+  app.dock.setIcon(dockIcon)
+}
+
+app.whenReady().then(() => {
+  const template = require('./utils/Menu').createTemplate(app)
+  const menu = Menu.buildFromTemplate(template)
+  Menu.setApplicationMenu(menu)
+  createWindow()
+})
 
 ipcMain.on('notify', (_, message) => {
   new Notification({
